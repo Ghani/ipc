@@ -30,14 +30,18 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public List<Item> findByCategry() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Item> findByCategry(Integer categoryId) {
+		return itemRepository.findByCategoryId(categoryId);
 	}
 
 	@Override
 	public Item findBySerialNumberAndCategoryId(String serialNumber, Integer categoryId) {
 		return itemRepository.findBySerialNumberAndCategoryId(serialNumber, categoryId);
+	}
+
+	@Override
+	public void deleteItem(String serialNumber) {
+		itemRepository.delete(serialNumber);		
 	}
 
 }

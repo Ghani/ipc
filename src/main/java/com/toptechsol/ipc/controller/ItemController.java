@@ -1,21 +1,20 @@
 package com.toptechsol.ipc.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.toptechsol.ipc.model.Category;
 import com.toptechsol.ipc.model.Item;
+import com.toptechsol.ipc.service.CategoryService;
 import com.toptechsol.ipc.service.ItemService;
-import com.toptechsol.ipc.service.NodeService;
 
 @Controller
 public class ItemController {
@@ -24,13 +23,13 @@ public class ItemController {
 	private ItemService itemService;
 
 	@Autowired
-	private NodeService nodeService;
+	private CategoryService categoryService;
 
 	@RequestMapping(value = "/admin/additem", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
 		Item newItem = new Item();
-		newItem.setNode(nodeService.loadTree(1));
+		newItem.setNode(categoryService.findById(1));
 		modelAndView.addObject("newItem", newItem);
 		modelAndView.setViewName("admin/additem");
 		return modelAndView;
@@ -41,16 +40,22 @@ public class ItemController {
 		if (bindingResult.hasErrors()) {
 			return "admin/additem";
 		}
-		item.setNode(nodeService.loadTree(1));
+		item.setNode(categoryService.findById(1));
 		itemService.save(item);
 		model.clear();
 		return "redirect:admin/items";
 	}
 
-	@ModelAttribute("items")
-	@RequestMapping(value = "/admin/items", method = RequestMethod.GET)
-	public List<Item> getListofItems() {
-		return this.itemService.findAll();
+	@RequestMapping(value = "/admin/category/{categoryId}/items", method = RequestMethod.GET)
+	public ModelAndView getListofItems(@PathVariable Integer categoryId) {
+		ModelAndView modelAndView = new ModelAndView();
+		Category selectedCategory = categoryService.findById(categoryId);
+			if (selectedCategory!=null){
+			modelAndView.addObject("items",this.itemService.findByCategry(categoryId) );
+			modelAndView.addObject("selectedCategory",selectedCategory );
+			modelAndView.setViewName("admin/items");
+		}
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/item/{serialNumber}", method = RequestMethod.GET)
@@ -67,10 +72,17 @@ public class ItemController {
 		if (bindingResult.hasErrors()) {
 			return "admin/updateitem";
 		}
-		item.setNode(nodeService.loadTree(1));
+		item.setNode(categoryService.findById(1));
 		itemService.save(item);
 		model.clear();
 		return "redirect:admin/items";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/admin/deleteitem/{serialNumber}", method = RequestMethod.DELETE)
+	public String deleteItem(@PathVariable String serialNumber) {
+		itemService.deleteItem(serialNumber);
+		return serialNumber;
 	}
 
 }

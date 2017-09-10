@@ -1,5 +1,7 @@
 package com.toptechsol.ipc.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +16,11 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 			+ "WHERE "
 			+ "item.serialNumber =:serialNumber "
 			+ "AND item.category.id =:categoryId ")
-	Item findBySerialNumberAndCategoryId(@Param("serialNumber") String serialNumber, @Param("categoryId") Integer nodeId);
+	Item findBySerialNumberAndCategoryId(@Param("serialNumber") String serialNumber, @Param("categoryId") Integer categoryId);
+	
+	@Query("SELECT item from Item item "
+			+ "WHERE "
+			+ "item.category.id =:categoryId ")
+	List<Item> findByCategoryId(@Param("categoryId") Integer categoryId);
+	
 }

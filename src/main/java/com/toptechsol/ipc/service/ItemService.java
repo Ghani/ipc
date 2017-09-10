@@ -8,6 +8,7 @@ public interface ItemService {
 	Item findBySerialNumber(String SerialNumber);
 	void save(Item item);
 	List<Item> findAll();
-	List<Item> findByCategry();
+	List<Item> findByCategry(Integer categoryId);
 	Item findBySerialNumberAndCategoryId(String serialNumber, Integer categoryId);
+	void deleteItem(String serialNumber);
 }

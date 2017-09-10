@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.toptechsol.ipc.model.Category;
 import com.toptechsol.ipc.model.User;
 import com.toptechsol.ipc.service.ItemService;
-import com.toptechsol.ipc.service.NodeService;
+import com.toptechsol.ipc.service.CategoryService;
 import com.toptechsol.ipc.service.UserService;
 
 
@@ -26,10 +26,7 @@ public class LoginController {
 	private UserService userService;
 	
 	@Autowired
-	private NodeService nodeService;
-	
-	@Autowired
-	private ItemService itemService;
+	private CategoryService categoryService;
 	
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -77,7 +74,7 @@ public class LoginController {
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("admin/home");
-		Category category = nodeService.loadTree(1);
+		Category category = categoryService.findById(1);
 		modelAndView.addObject("nodes", category);
 		Category newNode = new Category();
 		modelAndView.addObject("newNode", newNode);
@@ -86,7 +83,7 @@ public class LoginController {
 		newNode.setName("test me" + System.currentTimeMillis());
 		newNode.setDescription("Description" + System.currentTimeMillis());
 		node.getChildren().add(newNode);
-		nodeService.save(node);
+		categoryService.save(node);
 		
 		Item newItem = new Item();
 		newItem.setSerialNumber("XSSDSD125" + System.currentTimeMillis());

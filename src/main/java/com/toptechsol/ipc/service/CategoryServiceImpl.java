@@ -7,13 +7,13 @@ import com.toptechsol.ipc.model.Category;
 import com.toptechsol.ipc.repository.NodeRepository;
 
 @Service("nodeService")
-public class NodeServiceImpl implements NodeService{
+public class CategoryServiceImpl implements CategoryService{
 
 	@Autowired
 	private NodeRepository nodeRepository;
 	
 	@Override
-	public Category loadTree(Integer id) {
+	public Category findById(Integer id) {
 		return nodeRepository.findById(id);
 	}
 
