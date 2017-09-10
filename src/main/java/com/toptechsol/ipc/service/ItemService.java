@@ -5,10 +5,10 @@ import java.util.List;
 import com.toptechsol.ipc.model.Item;
 
 public interface ItemService {
-	Item findBySerialNumber(String SerialNumber);
-	void save(Item item);
+	Item findById(Long id);
+	Item save(Item item);
 	List<Item> findAll();
 	List<Item> findByCategry(Integer categoryId);
-	Item findBySerialNumberAndCategoryId(String serialNumber, Integer categoryId);
-	void deleteItem(String serialNumber);
+	Item findByIdAndCategoryId(Long id, Integer categoryId);
+	void deleteItem(Long id);
 }

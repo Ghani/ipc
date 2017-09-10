@@ -4,22 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.toptechsol.ipc.model.Category;
-import com.toptechsol.ipc.repository.NodeRepository;
+import com.toptechsol.ipc.repository.CategoryRepository;
 
-@Service("nodeService")
+@Service("categoryService")
 public class CategoryServiceImpl implements CategoryService{
 
 	@Autowired
-	private NodeRepository nodeRepository;
+	private CategoryRepository categoryRepository;
 	
 	@Override
 	public Category findById(Integer id) {
-		return nodeRepository.findById(id);
+		return categoryRepository.findById(id);
 	}
 
 	@Override
 	public void save(Category category) {
-		nodeRepository.save(category);
+		categoryRepository.save(category);
 	}
 
 

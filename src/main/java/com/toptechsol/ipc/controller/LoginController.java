@@ -75,27 +75,9 @@ public class LoginController {
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("admin/home");
 		Category category = categoryService.findById(1);
-		modelAndView.addObject("nodes", category);
-		Category newNode = new Category();
-		modelAndView.addObject("newNode", newNode);
-		/*
-		Category newNode = new Category();
-		newNode.setName("test me" + System.currentTimeMillis());
-		newNode.setDescription("Description" + System.currentTimeMillis());
-		node.getChildren().add(newNode);
-		categoryService.save(node);
-		
-		Item newItem = new Item();
-		newItem.setSerialNumber("XSSDSD125" + System.currentTimeMillis());
-		newItem.setName("Name" + System.currentTimeMillis());
-		newItem.setDescription("Description" + System.currentTimeMillis());
-		newItem.setCertificationDate(new Timestamp(System.currentTimeMillis()));
-		newItem.setModified(new Timestamp(System.currentTimeMillis()));
-		newItem.setCreated(new Timestamp(System.currentTimeMillis()));
-		newItem.setNote("BSDfzlkdsfm aslskfdnlskdfjsd" + System.currentTimeMillis());
-		newItem.setNode(node);
-		itemService.save(newItem);
-		*/
+		modelAndView.addObject("categories", category);
+		Category newCategory = new Category();
+		modelAndView.addObject("newCategory", newCategory);
 		return modelAndView;
 	}
 }

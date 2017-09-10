@@ -15,13 +15,13 @@ public class ItemServiceImpl implements ItemService {
 	private ItemRepository itemRepository;
 
 	@Override
-	public Item findBySerialNumber(String SerialNumber) {
-		return itemRepository.findOne(SerialNumber);
+	public Item findById(Long id) {
+		return itemRepository.findOne(id);
 	}
 
 	@Override
-	public void save(Item item) {
-		itemRepository.save(item);
+	public Item save(Item item) {
+		return itemRepository.save(item);
 	}
 
 	@Override
@@ -35,13 +35,13 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public Item findBySerialNumberAndCategoryId(String serialNumber, Integer categoryId) {
-		return itemRepository.findBySerialNumberAndCategoryId(serialNumber, categoryId);
+	public Item findByIdAndCategoryId(Long id, Integer categoryId) {
+		return itemRepository.findByIdAndCategoryId(id, categoryId);
 	}
 
 	@Override
-	public void deleteItem(String serialNumber) {
-		itemRepository.delete(serialNumber);		
+	public void deleteItem(Long id) {
+		itemRepository.delete(id);		
 	}
 
 }

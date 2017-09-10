@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import com.toptechsol.ipc.model.Item;
 
 @Repository("itemRepository")
-public interface ItemRepository extends JpaRepository<Item, String> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
 	@Query("SELECT item from Item item "
 			+ "WHERE "
-			+ "item.serialNumber =:serialNumber "
+			+ "item.id =:id "
 			+ "AND item.category.id =:categoryId ")
-	Item findBySerialNumberAndCategoryId(@Param("serialNumber") String serialNumber, @Param("categoryId") Integer categoryId);
+	Item findByIdAndCategoryId(@Param("id") Long id, @Param("categoryId") Integer categoryId);
 	
 	@Query("SELECT item from Item item "
 			+ "WHERE "

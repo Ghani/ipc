@@ -74,17 +74,17 @@
 				</div>
 <!-- 				<div th:fragment="submenu" th:remove="tag"> -->
 <!-- 		            <ul> -->
-<!-- 		                <li th:each="root : ${nodes.children}" > -->
+<!-- 		                <li th:each="root : ${categories.children}" > -->
 <!-- 		                    <span th:text="${root.name}">Town hall</span> -->
-<!-- 		                    <li th:each="node : ${root?.children}" > -->
-<!-- 		                    	<span th:text="${node.name}">Town hall</span> -->
+<!-- 		                    <li th:each="category : ${root?.children}" > -->
+<!-- 		                    	<span th:text="${category.name}">Town hall</span> -->
 <!-- 		                    </li> -->
 <!-- 		                </li> -->
 <!-- 		            </ul> -->
 <!-- 		        </div> -->
 		        
 		        <div class="navbar-collapse collapse"th:fragment="submenu" th:remove="tag">
-		           <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${nodes}"></section>
+		           <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${categories}"></section>
 		        </div>
 			</div>
 		</div>
@@ -100,11 +100,11 @@
 		            <div class="modal-body" id="myModalBody"></div>
 		            <!-- start -->
 				    <h2 th:text="#{title.new}">Add new Seed Starter</h2>
-			       	  <form action="#" th:action="@{/seedstartermng}" th:object="${newNode}" method="post">
+			       	  <form action="#" th:action="@{/seedstartermng}" th:object="${newCategory}" method="post">
 			        	<fieldset>
 				          <div>
 				            <label for="name">
-				              <span th:text="#{seedstarter.datePlanted}">Node Name</span>
+				              <span th:text="#{seedstarter.datePlanted}">Category Name</span>
 				            </label>
 				            <input type="text" th:field="*{name}" th:errorclass="fieldError" />
 				          </div>
