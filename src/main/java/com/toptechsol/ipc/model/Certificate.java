@@ -1,17 +1,13 @@
 package com.toptechsol.ipc.model;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "certificate")
@@ -26,14 +22,25 @@ public class Certificate {
 	private String filename;
 	
 	
+	@Column( name = "certificate" )
+	@Lob 
+	@Basic(fetch = FetchType.LAZY)
+	@NotNull
+	private byte[] content;
+	
+	@Column(name="type", length=100, nullable=false)
+	private String type;
+	
 	
 	public Certificate(){
 		
 	}
 	
-	public Certificate(Long id, String filename){
+	public Certificate(Long id, String filename, byte[] content, String type){
 		this.id=id;
 		this.filename=filename;
+		this.content=content;
+		this.type=type;
 	}
 	
 
@@ -66,5 +73,23 @@ public class Certificate {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+
+	public byte[] getContent() {
+		return content;
+	}
+
+	public void setContent(byte[] content) {
+		this.content = content;
+	}
+	
+    public String getType() {
+        return type;
+    }
+ 
+    public void setType(String type) {
+        this.type = type;
+    }
+	
+	
 
 }

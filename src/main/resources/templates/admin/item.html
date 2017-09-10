@@ -22,7 +22,7 @@
 				</div>
 				<div class="panel-body">
 					<h2 th:text="#{item.title.edit}">Edit Item</h2>
-					      <form action="#" th:action="@{'/admin/category/' + ${item.category.id} +'/updateitem'}" th:object="${item}" method="post">
+					      <form action="#" th:action="@{'/admin/category/' + ${item.category.id} +'/item/' +${item.id} }" th:object="${item}" method="post">
 					        <fieldset>
 					          <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
 					            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>

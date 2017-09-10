@@ -42,13 +42,11 @@
 								<td th:text="${item.certificationDate}"></td>
 								<td th:text="${item.certificationExpiredDate}"></td>
 
-								<td th:id="${item.id}"><button
-										class="btn btn-danger delete-item">X</button>|
-										<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}}">View</a>
-										
+								<td th:id="${item.id}">
+										<button class="btn btn-danger delete-item">X</button>|
+										<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}}">View</a>|
+										<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}+'/download'}">Download</a>
 								</td>
-
-
 							</tr>
 						</tbody>
 					</table>

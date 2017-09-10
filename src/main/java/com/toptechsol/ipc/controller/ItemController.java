@@ -5,9 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,8 +60,8 @@ public class ItemController {
 		Item savedItem  = itemService.save(item);
 		if (savedItem!=null){
 			try {
-				saveUploadedFiles(uploadfile.getBytes(), savedItem.getSerialNumber() + "_"  + uploadfile.getOriginalFilename());
-				certificateService.save(new Certificate(savedItem.getId(),savedItem.getSerialNumber() + "_" + uploadfile.getOriginalFilename()));
+				//saveUploadedFiles(uploadfile.getBytes(), savedItem.getSerialNumber() + "_"  + uploadfile.getOriginalFilename());
+				certificateService.save(new Certificate(savedItem.getId(),savedItem.getSerialNumber() + "_" + uploadfile.getOriginalFilename(),uploadfile.getBytes(), uploadfile.getContentType()));
 			} catch (IOException e) {
 				// To do
 			}
@@ -88,11 +91,29 @@ public class ItemController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/admin/category/{categoryId}/updateitem", params = { "update" }, method = RequestMethod.POST)
-	public String updateItem(@PathVariable Integer categoryId,final Item item, final BindingResult bindingResult, final ModelMap model) {
+	@RequestMapping(value = "/admin/category/{categoryId}/item/{id}/download", method = RequestMethod.GET)
+	public void downloadCertificate(@PathVariable Integer categoryId, @PathVariable Long id, HttpServletResponse response) {
+		Item item =this.itemService.findByIdAndCategoryId(id, categoryId);
+		if (item!=null && item.getCertificate()!=null){
+			 response.setContentType(item.getCertificate().getType());
+		     response.setContentLength(item.getCertificate().getContent().length);
+		     response.setHeader("Content-Disposition","attachment; filename=\"" + item.getCertificate().getFilename() +"\"");
+		     try {
+				FileCopyUtils.copy(item.getCertificate().getContent(), response.getOutputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		     
+		}
+	}
+	
+	@RequestMapping(value = "/admin/category/{categoryId}/item/{itemId}", params = { "update" }, method = RequestMethod.POST)
+	public String updateItem(@PathVariable Integer categoryId,@PathVariable Long itemId,final Item item, final BindingResult bindingResult, final ModelMap model) {
 		if (bindingResult.hasErrors()) {
 			return "admin/updateitem";
 		}
+		item.setId(itemId);
 		item.setCategory(categoryService.findById(categoryId));
 		itemService.save(item);
 		model.clear();
