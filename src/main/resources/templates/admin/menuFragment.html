@@ -1,0 +1,11 @@
+<html>
+    <section layout:fragment="menu">
+        <ul>
+              <li th:each="menuItem : ${menuItemsList}">
+		        <span  th:text="${menuItem.name}">prototype text...</span>
+		        <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${menuItem.children}"></section>
+		    </li>
+		    
+        </ul> 
+    </section>
+</html>

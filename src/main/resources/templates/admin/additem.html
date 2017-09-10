@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Admin Page</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+	<body >
+		<div class="container">
+			<form th:action="@{/logout}" method="get">
+				<button class="btn btn-md btn-danger btn-block" name="registration"
+					type="Submit">Logout</button>
+			</form>    
+			<div class="panel-group" style="margin-top:40px">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<span th:utext="${userName}"></span>
+					</div>
+					<div class="panel-body">
+    				      <h2 th:text="#{item.title.new}">Add new Seed Starter</h2>
+					      <form action="#" th:action="@{/admin/saveitem}" th:object="${newItem}" enctype="multipart/form-data" method="post">
+					    
+					        <fieldset>
+					          
+					
+					          <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+					            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+					          </ul>
+					
+					          <div>
+					            <label for="serialNumber">
+					              <span th:text="#{item.serialNumber}">Serial Number</span>
+					            </label>
+					            <input type="text" th:field="*{serialNumber}" th:errorclass="fieldError" />
+					          </div>
+					          
+					          <div>
+					            <label for="name">
+					              <span th:text="#{item.name}">Name</span>
+					            </label>
+					            <input type="text" th:field="*{name}" th:errorclass="fieldError" />
+					          </div>
+							  <div>
+					         	 <label for="description">
+					              <span th:text="#{item.description}">Name</span>
+					            </label>
+					            <input type="text" th:field="*{description}" th:errorclass="fieldError" />
+					          </div>
+					          
+					          <div>
+					            <label for="note">
+					              <span th:text="#{item.note}">Name</span>
+					            </label>
+					            <input type="text" th:field="*{note}" th:errorclass="fieldError" />
+					          </div>
+					          
+							  <div>
+					            <label for="manufactureName">
+					              <span th:text="#{item.manufactureName}">Name</span>
+					            </label>
+					            <input type="text" th:field="*{manufactureName}" th:errorclass="fieldError" />
+					          </div>
+					          
+							  <div>
+					            <label for="manufactureSerialNumber">
+					              <span th:text="#{item.manufactureSerialNumber}">Name</span>
+					            </label>
+					            <input type="text" th:field="*{manufactureSerialNumber}" th:errorclass="fieldError" />
+					          </div>
+					          
+					          <div>
+					            <label for="certificationDate">
+					              <span th:text="#{item.certificationDate}">Certification Date</span>
+					              (<span th:text="#{date.format}">YYYY/MM/DD</span>)
+					            </label>
+					            <input type="text" th:field="*{certificationDate}" th:errorclass="fieldError" />
+					          </div>
+							  <div>
+					            <label for="certificationExpiredDate">
+					              <span th:text="#{item.certificationExpiredDate}">certification Expired Date</span>
+					              (<span th:text="#{date.format}">YYYY/MM/DD</span>)
+					            </label>
+					            <input type="text" th:field="*{certificationExpiredDate}" th:errorclass="fieldError" />
+					          </div>
+					          <div>
+								<table>
+									<tr><td>File to upload:</td><td><input type="text" th:field="*{certificat}" th:errorclass="fieldError" /></td></tr>
+								</table>
+					          </div>
+					          
+					          
+					          <div class="submit">
+					            <button type="submit" name="save" th:text="#{item.add}">Add Item</button>    
+					          </div>
+					        </fieldset>
+					      </form>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
