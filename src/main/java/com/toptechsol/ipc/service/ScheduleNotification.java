@@ -31,7 +31,7 @@ public class ScheduleNotification {
 
 	@Scheduled(fixedRate = 7000, initialDelay = 2000)
 	public void fixedRateWithInitialDelayTask() {
-		emailHtmlSender.send("abdelghani.tag@gmail.com", "subject", "email/email", new Context());
+		//emailHtmlSender.send("abdelghani.tag@gmail.com", "subject", "email/email", new Context());
 		System.out.println(new Date() + " This runs in a fixed delay with a initial delay");
 	}
 

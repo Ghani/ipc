@@ -5,12 +5,12 @@
     <div th:replace="admin/layouts/layout :: navbar">(navbar)</div>
 
     <div class="container">
-			<div class="panel-group" style="margin-top:40px">
-		        <div class="navbar-collapse collapse"th:fragment="submenu" th:remove="tag">
-		           <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${categories}"></section>
-		        </div>
-			</div>
-		</div>
+      <div class="starter-template">
+        <h1>Spring MVC / Thymeleaf / Bootstrap</h1>
+      </div>
+    </div>
+
     <div th:include="admin/layouts/layout :: footer" id="footer">(footer)</div>
+
   </body>
 </html>

@@ -2,7 +2,9 @@
     <section layout:fragment="menu">
         <ul>
               <li th:each="menuItem : ${menuItemsList}">
-		        <span  th:text="${menuItem.name}">prototype text...</span>
+		        <a th:href="@{'/admin/category/' + ${menuItem.id} +'/items/'}"><span  th:text="${menuItem.name}">prototype text...</span></a>
+		        
+		        <span th:text="${#lists.size(menuItem.items)}">2</span>
 		        <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${menuItem.children}"></section>
 		    </li>
 		    

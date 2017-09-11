@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:include="admin/layouts/layout :: htmlhead" th:with="title='Hello'"></head>
 
-<head>
-<title>Admin Page</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+  <body>
+    <div th:replace="admin/layouts/layout :: navbar">(navbar)</div>
 
-<body>
-	<div class="container">
-		<form th:action="@{/logout}" method="get">
-			<button class="btn btn-md btn-danger btn-block" name="registration"
-				type="Submit">Logout</button>
-		</form>
-		<div class="panel-group" style="margin-top: 40px">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
-				</div>
-				<div class="panel-body">
+    <div class="container">
+      <div class="starter-template">
 					<h2 th:text="#{item.title.list}+${selectedCategory.name}">List Items</h2>
 					<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/additem'}">Add New Item</a>
 					<table class="table table-striped table-hover">
@@ -37,13 +21,12 @@
 						<tbody>
 
 							<tr th:each="item : ${items}">
-								<td >
+								<td>
 									<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}}"><span th:text="${item.serialNumber}"></span> </a>
 								</td>
 								<td th:text="${item.name}"></td>
-								<td th:text="${item.certificationDate}"></td>
-								<td th:text="${item.certificationExpiredDate}"></td>
-
+								<td th:text="${#calendars.format(item.certificationDate,'dd MMMM yyyy')}"></td>
+								<td th:text="${#calendars.format(item.certificationExpiredDate,'dd MMMM yyyy')}"></td>
 								<td th:id="${item.id}">
 										<button class="btn btn-danger delete-item">X</button>
 										<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}+'/download'}">Download</a>
@@ -51,10 +34,7 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<script type="application/javascript">
     $(document).ready(function () {
         $('.delete-item').on("click", function(e){
@@ -78,5 +58,10 @@
 
     });
 </script>
-</body>
+      </div>
+    </div>
+
+    <div th:include="admin/layouts/layout :: footer" id="footer">(footer)</div>
+
+  </body>
 </html>

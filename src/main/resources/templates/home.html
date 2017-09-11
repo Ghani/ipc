@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Admin Page</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages:["orgchart"]});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+
+        // For each orgchart box, provide the name, manager, and tooltip to show.
+        data.addRows([
+          [{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'},
+           '', 'The President'],
+          [{v:'Jim', f:'Jim<div style="color:red; font-style:italic">Vice President</div>'},
+           'Mike', 'VP'],
+          ['Alice', 'Mike', ''],
+          ['Bob', 'Jim', 'Bob Sponge'],
+          ['Carol', 'Bob', '']
+        ]);
+
+        // Create the chart.
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        // Draw the chart, setting the allowHtml option to true for the tooltips.
+        chart.draw(data, {allowHtml:true});
+      }
+   </script>
+   
+	<script th:inline="javascript" type="text/javascript">
+		/* Fill in modal with content loaded with Ajax */
+		$(document).ready(function () {
+		    $('#signup').on('click', function (e) {
+		        $("#myModal").modal();
+		        $("#myModalBody").text("");
+		        $.ajax({
+		            url: "signup",
+		            cache: false
+		        }).done(function (html) {
+		            $("#myModalBody").append(html);
+		        });
+		    })
+		});
+	</script>
+
+</head>
+	<body >
+		<div class="container">
+			<form th:action="@{/logout}" method="get">
+				<button class="btn btn-md btn-danger btn-block" name="registration"
+					type="Submit">Logout</button>
+			</form>    
+			<div class="panel-group" style="margin-top:40px">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<span th:utext="${userName}"></span>
+					</div>
+					<div class="panel-body" id="chart_div">
+					</div>
+					<p>
+			            <a id="signup" class="btn btn-success btn-lg">Sign up</a>
+			        </p>
+					<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+				</div>
+<!-- 				<div th:fragment="submenu" th:remove="tag"> -->
+<!-- 		            <ul> -->
+<!-- 		                <li th:each="root : ${categories.children}" > -->
+<!-- 		                    <span th:text="${root.name}">Town hall</span> -->
+<!-- 		                    <li th:each="category : ${root?.children}" > -->
+<!-- 		                    	<span th:text="${category.name}">Town hall</span> -->
+<!-- 		                    </li> -->
+<!-- 		                </li> -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+		        
+		        <div class="navbar-collapse collapse"th:fragment="submenu" th:remove="tag">
+		           <section layout:include="@{/admin/menuFragment} :: menu" th:with="menuItemsList=${categories}"></section>
+		        </div>
+			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title" id="myModalLabel">Signup</h4>
+		            </div>
+		            <div class="modal-body" id="myModalBody"></div>
+		            <!-- start -->
+				    <h2 th:text="#{title.new}">Add new Seed Starter</h2>
+			       	  <form action="#" th:action="@{/seedstartermng}" th:object="${newCategory}" method="post">
+			        	<fieldset>
+				          <div>
+				            <label for="name">
+				              <span th:text="#{seedstarter.datePlanted}">Category Name</span>
+				            </label>
+				            <input type="text" th:field="*{name}" th:errorclass="fieldError" />
+				          </div>
+					  	</fieldset>
+					  	<div class="submit">
+            				<button type="submit" name="save" th:text="#{seedstarter.create}">Add Seed Starter</button>    
+          			  	</div>
+					  </form>
+					
+
+		            <!-- End -->
+		            
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+
+	</body>
+</html>

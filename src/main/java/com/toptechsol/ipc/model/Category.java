@@ -39,14 +39,15 @@ public class Category {
 	@JoinColumn(name = "parent")
 	private List<Category> children;
 
-	// @OneToMany
-	// @JoinColumn(name = "parent")
-	// @OrderColumn
-	// private List<Category> children = new LinkedList<Category>();
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent", insertable = false, updatable = false)
 	private Category parent;
+	
+	
+	@OneToMany(targetEntity = Item.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	@JoinColumn(name = "category_id")
+	private List<Item> items;
 
 	public Integer getId() {
 		return id;
@@ -87,5 +88,15 @@ public class Category {
 	public void setChildren(List<Category> children) {
 		this.children = children;
 	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+	
+	
 
 }
