@@ -44,6 +44,11 @@ public class Item {
 	@Column(name = "manufacture_serial_number", nullable = false, length = 50)
 	@NotNull
 	private String manufactureSerialNumber;
+	
+	
+	@Column(name = "inspector_company_serial_number", nullable = false, length = 50)
+	@NotNull
+	private String inspectorCompanySerialNumber;
 
 	@Column(name = "certification_date", nullable = false)
 	@NotNull
@@ -53,7 +58,7 @@ public class Item {
 	@NotNull
 	private Date certificationExpiredDate;
 
-
+	 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -225,6 +230,24 @@ public class Item {
 	public void setCertificate(Certificate certificate) {
 		this.certificate = certificate;
 	}
+
+	public String getInspectorCompanySerialNumber() {
+		return inspectorCompanySerialNumber;
+	}
+
+	public void setInspectorCompanySerialNumber(String inspectorCompanySerialNumber) {
+		this.inspectorCompanySerialNumber = inspectorCompanySerialNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", serialNumber=" + serialNumber + ", name=" + name + ", description=" + description
+				+ ", note=" + note + ", manufactureName=" + manufactureName + ", manufactureSerialNumber="
+				+ manufactureSerialNumber + ", inspectorCompanySerialNumber=" + inspectorCompanySerialNumber
+				+ ", certificationDate=" + certificationDate + ", certificationExpiredDate=" + certificationExpiredDate
+				+ ", category=" + category + ", certificate=" + certificate + "]";
+	}
+	
 	
 	
 

@@ -1,0 +1,28 @@
+Note:
+   1- Item: rename name and to Type
+   2- Add a new column inspector company serial number
+
+
+- Well control it has extra documents (data book, manual....)
+- have another table to keep the list of maintenance dates.  date, name of the operation (eg: maintenanace or certification) expiry date
+
+
+Guage:
+   1- pressure range
+
+
+Flanges and Treating irons
+   1- size
+   2- Lenght
+   3- COC Date
+   4- COC Expired
+
+
+
+Static table to have the list of period: 3 months, 6 months , one year, 3 years, 5 years
+
+- Crud category/sub category/  (Left side of the page )
+- Add units ()
+- Validation
+- Error handling
+- user management

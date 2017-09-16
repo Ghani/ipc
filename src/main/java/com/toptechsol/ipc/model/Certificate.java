@@ -1,5 +1,7 @@
 package com.toptechsol.ipc.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +32,20 @@ public class Certificate {
 	
 	@Column(name="type", length=100, nullable=false)
 	private String type;
+	
+	
+	@Column(name = "date", nullable = false)
+	@NotNull
+	private Date date;
+	
+	@Column(name = "name", nullable = false, length = 50)
+	@NotNull
+	private String name;
+	
+	@Column(name = "expire_type", nullable = false)
+	@NotNull
+	private Date expireType;
+	
 	
 	
 	public Certificate(){
@@ -90,6 +106,7 @@ public class Certificate {
         this.type = type;
     }
 	
+    
 	
 
 }
