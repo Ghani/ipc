@@ -10,8 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -158,5 +160,12 @@ public class LoginController {
 			child.getChildren().add(childChild);
 		}
 		return child;
+	}
+	
+	@RequestMapping(value="/admin/tree", method = RequestMethod.GET)
+	public @ResponseBody String getTreeInJSON() {
+		Category category = categoryService.findById(0);
+		return  getJsonStringTree(category, String.valueOf(category.getId()));
+
 	}
 }

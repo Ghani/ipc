@@ -28,24 +28,21 @@
 <script type="text/javascript" th:src="@{/assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/core/app.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script th:inline="javascript">
-	/*<![CDATA[*/
-	$(function () {
-		var view_json =  /*[[${treeData}]]*/ ;
-		console.log(view_json);
-		
-        $('#jstree-proton-3').jstree({
-            'plugins': ["wholerow", "core"],
-            'core': {
-                'data': JSON.parse(view_json),
-                'themes': {
-                    'name': 'proton',
-                    'responsive': true
-                }
-            }
-        });
-	});
-	/*]]>*/
+<script>
+$(function() {
+  $('#jstree-categories').jstree({
+    'core' : {
+      'data' : {
+        "url" : "http://localhost:8080/admin/tree",
+        "dataType" : "json" // needed only if you do not supply JSON headers
+      },
+      'themes': {
+          'name': 'proton',
+          'responsive': true
+      }
+    }
+  });
+});
 </script>
 </head>
 
@@ -113,16 +110,9 @@
 						<div id="event_result" style="margin-top:2em; text-align:center;">&nbsp;</div>
 						<script>
 						$(function () {
-							$('#jstree-proton-3')
-								.on('changed.jstree', function (e, node) {
-									var i, j, r = [];
-									for(i = 0, j = data.selected.length; i < j; i++) {
-										r.push('<a  href="/admin/category/"' + data.instance.get_node(data.selected[i]).id + "/items/')  ;
-										//<a  href='/admin/category/MENU_ID/items/'><span>MENU_NAME</span></a>
-									}
-									$('#event_result').html('Selected:<br /> ' + r.join(', '));
-								})
-								.jstree();
+						    $('#jstree-categories').on('changed.jstree', function (e, data) {
+						        console.log(data.node.id);
+						    });
 						});
 						</script>
 						
