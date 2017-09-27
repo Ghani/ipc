@@ -1,26 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/layouts/layout :: htmlhead" th:with="title='Hello'"></head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-		<script th:inline="javascript">
-		/*<![CDATA[*/
-		$(function () {
-			var view_json =  /*[[${treeData}]]*/ ;
-			console.log(view_json);
-			
-			$('#jstree2').jstree({'plugins':["wholerow"], 'core' : {
-				'data' : JSON.parse(view_json),
-			}});
-		});
-		/*]]>*/
-		</script>
-		
-		
-<body>
-	<div class="container">
-		<div th:replace="admin/layouts/layout :: navbar">(navbar)</div>
-    	<div id="jstree2"></div>
-    </div>
-	<div th:include="admin/layouts/layout :: footer" id="footer">(footer)</div>
-</body>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="admin/layouts/layout">
+
 </html>

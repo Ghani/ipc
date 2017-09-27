@@ -1,10 +1,8 @@
-<html xmlns:th="http://www.thymeleaf.org">
-  <head th:include="admin/layouts/layout :: htmlhead" th:with="title='Hello'"></head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="admin/layouts/layout">
+<body>
 
-  <body>
-    <div th:replace="admin/layouts/layout :: navbar">(navbar)</div>
-
-    <div class="container">
+	<div id="content" layout:fragment="content">
 			<div class="row">
 		        <div class="col-sm-12">
 		            <legend><span th:text="${newItem.category.name}"></span>:</legend>
@@ -88,10 +86,36 @@
 		                </form>
 		            </div>
 		        </div> 
-			</div>
-		</div>
-
-    <div th:include="admin/layouts/layout :: footer" id="footer">(footer)</div>
-
-  </body>
+			</div>	
+	</div>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,63 +1,144 @@
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:fragment="htmlhead">
-    <meta charset="utf-8"></meta>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-    <meta name="description" content=""></meta>
-    <meta name="author" content=""></meta>
-    <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon.png}"></link>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limitless - Responsive Web Application Kit by Eugene
+	Kopyov</title>
 
-   	<title th:text="${title}">(title)</title>
+<!-- Global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/icons/icomoon/styles.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/core.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/components.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/colors.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://www.orangehilldev.com/jstree-bootstrap-theme/demo/assets/dist/themes/proton/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<!-- /global stylesheets -->
+<!-- Core JS files -->
+<script type="text/javascript" th:src="@{/assets/js/core/libraries/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/core/libraries/bootstrap.min.js}"></script>
+<!-- /core JS files -->
 
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link th:href="@{/css/starter.css}" rel="stylesheet"></link>
-  </head>
+<!-- Theme JS files -->
+<script type="text/javascript" th:src="@{/assets/js/plugins/forms/styling/switchery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/plugins/forms/styling/uniform.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/core/app.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(function () {
+		var view_json =  /*[[${treeData}]]*/ ;
+		console.log(view_json);
+		
+        $('#jstree-proton-3').jstree({
+            'plugins': ["wholerow", "core"],
+            'core': {
+                'data': JSON.parse(view_json),
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true
+                }
+            }
+        });
+	});
+	/*]]>*/
+</script>
+</head>
 
-  <body>
-    <div th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">IPC</a>
-        </div>
-        <div class="collapse navbar-collapse">
-        	<ul class="nav navbar-nav"
-				sec:authorize="isAuthenticated()">
-				<li><a th:href="@{'/admin/home'}">Home</a></li>
-            	<li><a th:href="@{/logout}">Logout</a></li>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"><i class="fa fa-user fa-fw"></i>
-						<span sec:authentication="name">Username</span> &nbsp;<i
-						class="fa fa-caret-down"></i></a>
-					<ul class="dropdown-menu dropdown-user">
-						<li><a href="#"><i class="fa fa-user fa-fw"></i> User
-								Profile</a></li>
-						<li class="divider"></li>
-						<li><a th:href="@{/logout}" href="/logout"><i
-								class="fa fa-sign-out fa-fw"></i> Logout</a></li>
-					</ul> 
-				</li>
-			</ul>
-        </div>
-      </div>
+<body>
+	<!-- Main navbar -->
+	<div th:replace="admin/layouts/fragments/header :: div"></div>
+	<!-- /main navbar -->
 
-    </div>
+	<!-- Page container -->
+	<div class="page-container">
+		<!-- Page content -->
+		<div class="page-content">
+			<!-- Main sidebar -->
+			<div th:replace="admin/layouts/fragments/sidebar :: div"></div>
+			<!-- /main sidebar -->
+			<!-- Main content -->
+			<div class="content-wrapper">
+			    <!-- Page header -->
+				<div class="page-header page-header-default">
+					<div class="page-header-content">
+						<div class="page-title">
+							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Dashboard</h4>
+						</div>
 
-    <div class="container">
-      <div class="starter-template">
-      </div>
-    </div>
+						<div class="heading-elements">
+							<div class="heading-btn-group">
+								<a href="#" class="btn btn-link btn-float text-size-small has-text"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+								<a href="#" class="btn btn-link btn-float text-size-small has-text"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+								<a href="#" class="btn btn-link btn-float text-size-small has-text"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+							</div>
+						</div>
+					</div>
 
-    <div th:fragment="footer" id="footer">
-      <div class="footer">All rights reserved  <a href="http://toptechsol.com" ><strong>Top Tech Solution</strong></a>.</div>
-    </div>
+					<div class="breadcrumb-line">
+						<ul class="breadcrumb">
+							<li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+							<li class="active">Dashboard</li>
+						</ul>
 
-  </body>
-</html>
+						<ul class="breadcrumb-elements">
+							<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-gear position-left"></i>
+									Settings
+									<span class="caret"></span>
+								</a>
+
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+									<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+									<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /page header -->
+				<!-- Content area -->
+				<div class="content" layout:fragment="content">
+					<!-- Dashboard content -->
+					<div class="row">
+						<div id="event_result" style="margin-top:2em; text-align:center;">&nbsp;</div>
+						<script>
+						$(function () {
+							$('#jstree-proton-3')
+								.on('changed.jstree', function (e, node) {
+									var i, j, r = [];
+									for(i = 0, j = data.selected.length; i < j; i++) {
+										r.push('<a  href="/admin/category/"' + data.instance.get_node(data.selected[i]).id + "/items/')  ;
+										//<a  href='/admin/category/MENU_ID/items/'><span>MENU_NAME</span></a>
+									}
+									$('#event_result').html('Selected:<br /> ' + r.join(', '));
+								})
+								.jstree();
+						});
+						</script>
+						
+					</div>
+					<!-- /dashboard content -->
+					<!-- Footer -->
+					<div th:replace="admin/layouts/fragments/footer :: div"></div>
+					<!-- /footer -->
+				</div>
+				<!-- /content area -->
+			
+			</div>
+			<!-- /main content -->
+		</div>
+		<!-- /page content -->
+	</div>
+	<!-- /page container -->
+</body>
+</html>	

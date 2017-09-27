@@ -18,7 +18,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toptechsol.ipc.model.Category;
-import com.toptechsol.ipc.model.Item;
 import com.toptechsol.ipc.model.JsTreeNode;
 import com.toptechsol.ipc.model.State;
 import com.toptechsol.ipc.model.User;
@@ -106,7 +105,7 @@ public class LoginController {
 			JsTreeNode treeRoot = new JsTreeNode();
 
 			treeRoot.setId("R" + parent.getId());
-			treeRoot.setIcon("glyphicon glyphicon-leaf");
+			//treeRoot.setIcon("glyphicon glyphicon-leaf");
 			treeRoot.setText(parent.getName());
 			State state = new State();
 			state.setOpened(true);
@@ -141,11 +140,8 @@ public class LoginController {
 	public static JsTreeNode addChild(Category item, String selectedItem, boolean selected) {
 		JsTreeNode child = new JsTreeNode();
 		child.setId(String.valueOf(item.getId()));
-		child.setIcon("glyphicon glyphicon-leaf");
+		//child.setIcon("glyphicon glyphicon-leaf");
 		child.setText(item.getName());
-		String color = "red";
-
-		child.setColor(color);
 		State state = new State();
 		state.setOpened(true);
 		if (child.getId() != null) {
