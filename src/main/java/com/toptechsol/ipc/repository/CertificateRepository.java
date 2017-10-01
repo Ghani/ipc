@@ -7,4 +7,5 @@ import com.toptechsol.ipc.model.Certificate;
 
 @Repository("certificateRepository")
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
+	
 }

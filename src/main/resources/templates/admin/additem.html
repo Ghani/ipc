@@ -4,89 +4,79 @@
 
 	<div id="content" layout:fragment="content">
 			<div class="row">
-		        <div class="col-sm-12">
-		            <legend><span th:text="${newItem.category.name}"></span>:</legend>
-		        </div>
+		        <div class="col-md-12">
 		        <!-- panel preview -->
-		        <div class="col-sm-5">
-		            <h4 th:text="#{item.title.new}">Add new Item:</h4>
-		            <div class="panel panel-default">
-		             <form action="#" th:action="@{'/admin/category/' + ${newItem.category.id} + '/saveitem'}" th:object="${newItem}" enctype="multipart/form-data" method="post">
+		        <div class="panel panel-flat">
+		            <div class="panel-heading">
+						<h5 class="panel-title" th:text="#{item.title.new}">Add new Item:</h5>
+						<h5 class="panel-title" th:text="${newItem.category.name}">Add new Item:</h5>
+						<div class="heading-elements">
+							<ul class="icons-list">
+		                		<li><a data-action="collapse"></a></li>
+		                	</ul>
+	                	</div>
+					</div>
+		            <div class="panel-body">
+		             <form id="additemForm" class="form-horizontal" action="#" th:action="@{'/admin/category/' + ${newItem.category.id} + '/saveitem'}" th:object="${newItem}" enctype="multipart/form-data" method="post">
+		                <fieldset class="content-group">
 		                <div class="panel-body form-horizontal payment-form">
 		                    <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
 							            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
 							          </ul>
 		                    
 		                    <div class="form-group">
-		                        <label for="serialNumber" class="col-sm-3 control-label"><span th:text="#{item.serialNumber}">Serial Number</span></label>
-		                        <div class="col-sm-9">
+		                        <label for="serialNumber" class="control-label col-lg-2"><span th:text="#{item.serialNumber}">Serial Number</span></label>
+		                        <div class="col-lg-10">
 		                            <input type="text" class="form-control" th:field="*{serialNumber}" th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    <div class="form-group">
-		                        <label for="name" class="col-sm-3 control-label"><span th:text="#{item.name}">Name</span></label>
-		                        <div class="col-sm-9">
-		                            <input type="text" class="form-control" th:field="*{name}"  th:errorclass="fieldError" />
-		                        </div>
-		                    </div> 
-		                    <div class="form-group">
-		                        <label for="description" class="col-sm-3 control-label"><span th:text="#{item.description}">description</span></label>
-		                        <div class="col-sm-9">
+		                        <label for="description" class="control-label col-lg-2"><span th:text="#{item.description}">description</span></label>
+		                        <div class="col-lg-10">
 		                            <input type="text" class="form-control" th:field="*{description}"  th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                        <label for="manufactureName" class="col-sm-3 control-label"><span th:text="#{item.manufactureName}">manufactureName</span></label>
-		                        <div class="col-sm-9">
+		                        <label for="manufactureName" class="control-label col-lg-2"><span th:text="#{item.manufactureName}">manufactureName</span></label>
+		                        <div class="col-lg-10">
 		                            <input type="text" class="form-control" th:field="*{manufactureName}"  th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                        <label for="manufactureSerialNumber" class="col-sm-3 control-label"><span th:text="#{item.manufactureSerialNumber}">manufactureSerialNumber</span></label>
-		                        <div class="col-sm-9">
+		                        <label for="manufactureSerialNumber" class="control-label col-lg-2"><span th:text="#{item.manufactureSerialNumber}">manufactureSerialNumber</span></label>
+		                        <div class="col-lg-10">
 		                            <input type="text" class="form-control" th:field="*{manufactureSerialNumber}"  th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    
-		                    <div class="form-group">
-		                        <label for="certificationDate" class="col-sm-3 control-label"><span th:text="#{item.certificationDate}">certificationDate</span></label>
-		                        <div class="col-sm-9">
-		                            <input type="date" class="form-control" th:field="*{certificationDate}" th:errorclass="fieldError" />
+							<div class="form-group">
+		                        <label for="inspectorCompanySerialNumber" class="control-label col-lg-2"><span th:text="#{item.inspectorCompanySerialNumber}">inspectorCompanySerialNumber</span></label>
+		                        <div class="col-lg-10">
+		                            <input type="text" class="form-control" th:field="*{inspectorCompanySerialNumber}"  th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    
-		                    <div class="form-group">
-		                        <label for="certificationExpiredDate" class="col-sm-3 control-label"><span th:text="#{item.certificationExpiredDate}">certificationExpiredDate</span></label>
-		                        <div class="col-sm-9">
-		                            <input type="date" class="form-control" th:field="*{certificationExpiredDate}" th:errorclass="fieldError" />
-		                        </div>
-		                    </div>
 							<div class="form-group">
-		                        <label for="note" class="col-sm-3 control-label"><span th:text="#{item.note}">note</span></label>
-		                        <div class="col-sm-9">
+		                        <label for="note" class="control-label col-lg-2"><span th:text="#{item.note}">note</span></label>
+		                        <div class="col-lg-10">
 		                            <input type="text" class="form-control" th:field="*{note}"  th:errorclass="fieldError" />
 		                        </div>
 		                    </div>
 		                    <div class="form-group">
-		                        <label for="certificat" class="col-sm-3 control-label"><span>File to upload:</span></label>
-		                        <div class="col-sm-9">
-		                            <input type="file" name="certificat"  />
-		                        </div>
-		                    </div>   
-		                    <div class="form-group">
 		                        <div class="col-sm-12 text-right">
-		                            <button type="submit" name="save"  class="btn btn-default preview-add-button">
-		                                <span class="glyphicon glyphicon-plus"></span> Add
-		                            </button>
+		                            <button type="submit" name="save" class="btn btn-primary">Add <i class="icon-arrow-right14 position-right"></i></button>
 		                        </div>
 		                    </div>
 		                </div>
+		                </fieldset>
 		                </form>
 		            </div>
 		        </div> 
-			</div>	
+		       
+	 	</div>
+	</div>
 	</div>
 </body>
 </html>

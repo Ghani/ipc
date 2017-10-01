@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorator="admin/layouts/layout">
+<html xmlns:th="http://www.thymeleaf.org" >
    <head>
    
    
@@ -14,9 +14,10 @@
 						<thead>
 							<tr>
 								<th>serialNumber</th>
-								<th>Name</th>
-								<th>Certification Date</th>
-								<th>Certification Expired Date</th>
+								<th>Description</th>
+								<th>Manufacture Name</th>
+								<th>Manufacture Serial Number</th>
+								<th>Inspector Company Serial Number</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -26,40 +27,16 @@
 								<td>
 									<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}}"><span th:text="${item.serialNumber}"></span> </a>
 								</td>
-								<td th:text="${item.name}"></td>
-								<td th:text="${#calendars.format(item.certificationDate,'dd MMMM yyyy')}"></td>
-								<td th:text="${#calendars.format(item.certificationExpiredDate,'dd MMMM yyyy')}"></td>
+								<td th:text="${item.description}"></td>
+								<td th:text="${item.manufactureName}"></td>
+								<td th:text="${item.manufactureSerialNumber}"></td>
+								<td th:text="${item.inspectorCompanySerialNumber}"></td>
 								<td th:id="${item.id}">
-										<button class="btn btn-danger delete-item">X</button>
-										<a th:href="@{'/admin/category/' + ${selectedCategory.id}+'/item/' + ${item.id}+'/download'}">Download</a>
+										<button class="btn btn-danger delete-item">Delete</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-
-	<script type="application/javascript">
-    $(document).ready(function () {
-        $('.delete-item').on("click", function(e){
-            e.preventDefault();
-        	var id = $(this).closest("td").attr("id");
-        	console.log("id: " + id);
-            if(confirm("Are you sure you want to delete the selected item?"  )){
-
-                $.ajax({
-                    type:"DELETE",
-                    url:"/admin/deleteitem/" + id,
-                    success:function (data) {
-                        $(".delete-item").closest("td#"+data).parent("tr").fadeOut("slow",function(){
-                            $(".delete-item").closest("td#"+data).parent("tr").remove();
-                        });
-                    }
-                });
-            }
-
-        });
-
-    });
-</script>
       </div>
    </div>
    </body>

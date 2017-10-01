@@ -1,9 +1,6 @@
 package com.toptechsol.ipc.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +23,7 @@ import com.toptechsol.ipc.model.Item;
 import com.toptechsol.ipc.service.CategoryService;
 import com.toptechsol.ipc.service.CertificateService;
 import com.toptechsol.ipc.service.ItemService;
+import com.toptechsol.ipc.validation.FileValidator;
 
 @Controller
 public class ItemController {
@@ -39,7 +37,9 @@ public class ItemController {
 	@Autowired
 	private CertificateService certificateService;
 	
-	private static String UPLOADED_FOLDER = "/home/abdelghani/dev/projects/toptechsol/ipc/temp/";
+	@Autowired
+	FileValidator fileValidator;
+
 
 	@RequestMapping(value = "/admin/category/{categoryId}/additem", method = RequestMethod.GET)
 	public ModelAndView additem(@PathVariable Integer categoryId) {
@@ -52,22 +52,17 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/saveitem", params = { "save" }, method = RequestMethod.POST)
-	public String createItem(@PathVariable Integer categoryId, final Item item, final BindingResult bindingResult, final ModelMap model, @RequestParam("certificat") MultipartFile uploadfile) {
+	public String createItem(@PathVariable Integer categoryId, final Item item, final BindingResult bindingResult, final ModelMap model) {
 		if (bindingResult.hasErrors()) {
 			return "admin/additem";
 		}
 		item.setCategory(categoryService.findById(categoryId));
 		Item savedItem  = itemService.save(item);
 		if (savedItem!=null){
-			try {
-				//saveUploadedFiles(uploadfile.getBytes(), savedItem.getSerialNumber() + "_"  + uploadfile.getOriginalFilename());
-				certificateService.save(new Certificate(savedItem.getId(),savedItem.getSerialNumber() + "_" + uploadfile.getOriginalFilename(),uploadfile.getBytes(), uploadfile.getContentType()));
-			} catch (IOException e) {
-				// To do
-			}
 			model.clear();
+			return "redirect:/admin/category/" +categoryId + "/item/"+ savedItem.getId();
 		}
-		return "redirect:/admin/category/" +categoryId + "/items";
+		return null;
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/items", method = RequestMethod.GET)
@@ -86,20 +81,49 @@ public class ItemController {
 	public ModelAndView getItem(@PathVariable Integer categoryId, @PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		Item item =this.itemService.findByIdAndCategoryId(id, categoryId);
+		Certificate certificate = new Certificate();
 		modelAndView.addObject("item",item );
+		modelAndView.addObject("newCertificate",certificate );
 		modelAndView.setViewName("admin/item");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/admin/category/{categoryId}/item/{id}/download", method = RequestMethod.GET)
-	public void downloadCertificate(@PathVariable Integer categoryId, @PathVariable Long id, HttpServletResponse response) {
+	@RequestMapping(value = "/admin/category/{categoryId}/item/{id}/certificate", params = { "upload" }, method = RequestMethod.POST)
+	public ModelAndView addCertificate(@PathVariable Integer categoryId, @PathVariable Long id, final Certificate certificate,final BindingResult bindingResult,@RequestParam("file") MultipartFile uploadfile) {
+		ModelAndView modelAndView = new ModelAndView();
 		Item item =this.itemService.findByIdAndCategoryId(id, categoryId);
-		if (item!=null && item.getCertificate()!=null){
-			 response.setContentType(item.getCertificate().getType());
-		     response.setContentLength(item.getCertificate().getContent().length);
-		     response.setHeader("Content-Disposition","attachment; filename=\"" + item.getCertificate().getFilename() +"\"");
+		if (item !=null){
+			try {
+				certificate.setId(null);
+				certificate.setContent(uploadfile.getBytes());
+				certificate.setFilename(uploadfile.getOriginalFilename());
+				certificate.setFileType(uploadfile.getContentType());
+				certificate.setItem(item);
+				certificate.setExpiryDate(certificate.getDate());
+				certificateService.save(certificate);
+				item.getCertificates().add(certificate);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		modelAndView.addObject("item",item );
+		modelAndView.addObject("newCertificate", new Certificate());
+		modelAndView.setViewName("admin/item");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/admin/category/{categoryId}/item/{itemId}/downloadcertificate/{id}", method = RequestMethod.GET)
+	public void downloadDocument(@PathVariable Integer categoryId,@PathVariable Long itemId,@PathVariable Long id, HttpServletResponse response) {
+		Certificate certificate =this.certificateService.findById(id);
+		if (certificate!=null && certificate.getContent()!=null){
+			 response.setContentType(certificate.getFileType());
+		     response.setContentLength(certificate.getContent().length);
+		     response.setHeader("Content-Disposition","attachment; filename=\"" + certificate.getFilename() +"\"");
 		     try {
-				FileCopyUtils.copy(item.getCertificate().getContent(), response.getOutputStream());
+				FileCopyUtils.copy(certificate.getContent(), response.getOutputStream());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -127,11 +151,10 @@ public class ItemController {
 		return id;
 	}
 	
-	private void saveUploadedFiles(byte[] bytes, String fileName) throws IOException {
-            Path path = Paths.get(UPLOADED_FOLDER + fileName );
-            Files.write(path, bytes);
-
-
-    }
-
+	@ResponseBody
+	@RequestMapping(value = "/admin/deletedocument/{id}", method = RequestMethod.DELETE)
+	public Long deleteDocument(@PathVariable Long  id) {
+		this.certificateService.deleteCertificate(id);
+		return id;
+	}
 }

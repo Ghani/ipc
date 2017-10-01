@@ -21,5 +21,11 @@ public class CertificateServiceImpl implements CertificateService {
 		return certificateRepository.save(certifcate);
 	}
 
+	@Override
+	public void deleteCertificate(Long id) {
+		certificateRepository.delete(id);
+		
+	}
+
 
 }

@@ -141,7 +141,7 @@ public class LoginController {
 	
 	public static JsTreeNode addChild(Category item, String selectedItem, boolean selected) {
 		JsTreeNode child = new JsTreeNode();
-		child.setId(String.valueOf(item.getId()));
+		child.setId("R" + String.valueOf(item.getId()));
 		//child.setIcon("glyphicon glyphicon-leaf");
 		child.setText(item.getName());
 		State state = new State();
@@ -164,7 +164,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/admin/tree", method = RequestMethod.GET)
 	public @ResponseBody String getTreeInJSON() {
-		Category category = categoryService.findById(0);
+		Category category = categoryService.findById(50000);
 		return  getJsonStringTree(category, String.valueOf(category.getId()));
 
 	}

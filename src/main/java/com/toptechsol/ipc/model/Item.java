@@ -1,6 +1,7 @@
 package com.toptechsol.ipc.model;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,26 +11,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-//Type	Size	Length ft
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "item")
 public class Item {
 	@Id
-	@Column(name = "id", unique = true, nullable = false, updatable=false)
+	@Column(name = "item_id", unique = true, nullable = false, updatable=false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "serial_number", unique = true, nullable = false, updatable=true,length = 50)
 	private String serialNumber;
 
-	@Column(name = "name", nullable = false, length = 50)
-	@NotNull
-	private String name;
 
 	@Column(name = "description", nullable = true, length = 100)
 	private String description;
@@ -50,23 +50,18 @@ public class Item {
 	@NotNull
 	private String inspectorCompanySerialNumber;
 
-	@Column(name = "certification_date", nullable = false)
-	@NotNull
-	private Date certificationDate;
-
-	@Column(name = "certification_expired_date", nullable = false)
-	@NotNull
-	private Date certificationExpiredDate;
-
-	 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
-	private Certificate certificate;
+	
+	@OneToMany(targetEntity = Certificate.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	@JoinColumn(name = "item_id")
+	private List<Certificate> certificates = new ArrayList<Certificate>() ;
+	
+	
 	
 	/**
 	 * @return the id
@@ -95,21 +90,6 @@ public class Item {
 	 */
 	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**
@@ -143,21 +123,6 @@ public class Item {
 	}
 
 	/**
-	 * @return the certificationDate
-	 */
-	public Date getCertificationDate() {
-		return certificationDate;
-	}
-
-	/**
-	 * @param certificationDate
-	 *            the certificationDate to set
-	 */
-	public void setCertificationDate(Date certificationDate) {
-		this.certificationDate = certificationDate;
-	}
-
-	/**
 	 * @return the category
 	 */
 	public Category getCategory() {
@@ -172,20 +137,6 @@ public class Item {
 		this.category = category;
 	}
 
-	/**
-	 * @return the certificationExpiredDate
-	 */
-	public Date getCertificationExpiredDate() {
-		return certificationExpiredDate;
-	}
-
-	/**
-	 * @param certificationExpiredDate
-	 *            the certificationExpiredDate to set
-	 */
-	public void setCertificationExpiredDate(Date certificationExpiredDate) {
-		this.certificationExpiredDate = certificationExpiredDate;
-	}
 
 	/**
 	 * @return the manufactureName
@@ -217,18 +168,14 @@ public class Item {
 		this.manufactureSerialNumber = manufactureSerialNumber;
 	}
 
-	/**
-	 * @return the certificate
-	 */
-	public Certificate getCertificate() {
-		return certificate;
+
+
+	public List<Certificate> getCertificates() {
+		return certificates;
 	}
 
-	/**
-	 * @param certificate the certificate to set
-	 */
-	public void setCertificate(Certificate certificate) {
-		this.certificate = certificate;
+	public void setCertificates(List<Certificate> certificates) {
+		this.certificates = certificates;
 	}
 
 	public String getInspectorCompanySerialNumber() {
@@ -241,11 +188,10 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", serialNumber=" + serialNumber + ", name=" + name + ", description=" + description
+		return "Item [id=" + id + ", serialNumber=" + serialNumber  + ", description=" + description
 				+ ", note=" + note + ", manufactureName=" + manufactureName + ", manufactureSerialNumber="
 				+ manufactureSerialNumber + ", inspectorCompanySerialNumber=" + inspectorCompanySerialNumber
-				+ ", certificationDate=" + certificationDate + ", certificationExpiredDate=" + certificationExpiredDate
-				+ ", category=" + category + ", certificate=" + certificate + "]";
+				+ ", category=" + category + "]";
 	}
 	
 	
