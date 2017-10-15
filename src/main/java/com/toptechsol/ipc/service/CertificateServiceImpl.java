@@ -1,5 +1,8 @@
 package com.toptechsol.ipc.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,16 @@ public class CertificateServiceImpl implements CertificateService {
 	public void deleteCertificate(Long id) {
 		certificateRepository.delete(id);
 		
+	}
+
+	@Override
+	public List<Certificate> listExpiredDocument(Date date) {
+		return certificateRepository.listExpiredDocument(date);
+	}
+
+	@Override
+	public List<Certificate> listDocumentWillExpireInMonths(Date startDate, Date endDate) {
+		return certificateRepository.listDocumentWillExpireInMonths(startDate, endDate);
 	}
 
 

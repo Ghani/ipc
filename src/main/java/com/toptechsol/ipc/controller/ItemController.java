@@ -1,6 +1,8 @@
 package com.toptechsol.ipc.controller;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,7 +44,7 @@ public class ItemController {
 
 
 	@RequestMapping(value = "/admin/category/{categoryId}/additem", method = RequestMethod.GET)
-	public ModelAndView additem(@PathVariable Integer categoryId) {
+	public ModelAndView additem(@PathVariable String categoryId) {
 		ModelAndView modelAndView = new ModelAndView();
 		Item newItem = new Item();
 		newItem.setCategory(categoryService.findById(categoryId));
@@ -52,7 +54,7 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/saveitem", params = { "save" }, method = RequestMethod.POST)
-	public String createItem(@PathVariable Integer categoryId, final Item item, final BindingResult bindingResult, final ModelMap model) {
+	public String createItem(@PathVariable String categoryId, final Item item, final BindingResult bindingResult, final ModelMap model) {
 		if (bindingResult.hasErrors()) {
 			return "admin/additem";
 		}
@@ -66,7 +68,7 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/items", method = RequestMethod.GET)
-	public ModelAndView getListofItems(@PathVariable Integer categoryId) {
+	public ModelAndView getListofItems(@PathVariable String categoryId) {
 		ModelAndView modelAndView = new ModelAndView();
 		Category selectedCategory = categoryService.findById(categoryId);
 			if (selectedCategory!=null){
@@ -78,7 +80,7 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/admin/category/{categoryId}/item/{id}", method = RequestMethod.GET)
-	public ModelAndView getItem(@PathVariable Integer categoryId, @PathVariable Long id) {
+	public ModelAndView getItem(@PathVariable String categoryId, @PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		Item item =this.itemService.findByIdAndCategoryId(id, categoryId);
 		Certificate certificate = new Certificate();
@@ -89,7 +91,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value = "/admin/category/{categoryId}/item/{id}/certificate", params = { "upload" }, method = RequestMethod.POST)
-	public ModelAndView addCertificate(@PathVariable Integer categoryId, @PathVariable Long id, final Certificate certificate,final BindingResult bindingResult,@RequestParam("file") MultipartFile uploadfile) {
+	public ModelAndView addCertificate(@PathVariable String categoryId, @PathVariable Long id, final Certificate certificate,final BindingResult bindingResult,@RequestParam("file") MultipartFile uploadfile) {
 		ModelAndView modelAndView = new ModelAndView();
 		Item item =this.itemService.findByIdAndCategoryId(id, categoryId);
 		if (item !=null){
@@ -133,7 +135,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value = "/admin/category/{categoryId}/item/{itemId}", params = { "update" }, method = RequestMethod.POST)
-	public String updateItem(@PathVariable Integer categoryId,@PathVariable Long itemId,final Item item, final BindingResult bindingResult, final ModelMap model) {
+	public String updateItem(@PathVariable String categoryId,@PathVariable Long itemId,final Item item, final BindingResult bindingResult, final ModelMap model) {
 		if (bindingResult.hasErrors()) {
 			return "admin/updateitem";
 		}

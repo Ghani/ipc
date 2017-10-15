@@ -13,13 +13,18 @@ public class CategoryServiceImpl implements CategoryService{
 	private CategoryRepository categoryRepository;
 	
 	@Override
-	public Category findById(Integer id) {
-		return categoryRepository.findById(id);
+	public Category findById(String id) {
+		return categoryRepository.findOne(id);
 	}
 
 	@Override
-	public void save(Category category) {
-		categoryRepository.save(category);
+	public Category save(Category category) {
+		return categoryRepository.save(category);
+	}
+
+	@Override
+	public void delete(Category category) {
+		categoryRepository.delete(category);
 	}
 
 

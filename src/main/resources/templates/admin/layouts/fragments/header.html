@@ -10,11 +10,13 @@
 	<div class="navbar-collapse collapse" id="navbar-mobile">
 	
 
-		<div class="navbar-right">
-			<p class="navbar-text">Morning, Victoria!</p>
-			<p class="navbar-text"><span class="label bg-success-400">Online</span></p>
+		<div class="navbar-right" sec:authorize="isAuthenticated()">
+			<p class="navbar-text" sec:authentication="name"></p>
 			
+			<a th:href="@{/logout}" href="/logout"><p class="navbar-text"><span class="label bg-success-400">logout</span></p></a>
 
+	
+	
 		</div>
 	</div>
 </div>

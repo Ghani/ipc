@@ -30,12 +30,12 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public List<Item> findByCategry(Integer categoryId) {
+	public List<Item> findByCategry(String categoryId) {
 		return itemRepository.findByCategoryId(categoryId);
 	}
 
 	@Override
-	public Item findByIdAndCategoryId(Long id, Integer categoryId) {
+	public Item findByIdAndCategoryId(Long id, String categoryId) {
 		return itemRepository.findByIdAndCategoryId(id, categoryId);
 	}
 

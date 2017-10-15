@@ -1,4 +1,118 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="admin/layouts/layout">
+   <body>
+   	<div id="content" layout:fragment="content">
+		<div class="row">
+		
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<div class="generic-container">
+						<div class="panel panel-default">
+							<!-- Default panel contents -->
+							<div class="panel-heading">
+								<span class="lead">List of Expired Documents </span>
+								<div class="heading-elements">
+									<ul class="icons-list">
+										<li><a data-action="collapse"></a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="tablecontainer">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Item</th>
+											<th>Category</th>
+											<th>Type</th>
+											<th>Name</th>
+											<th>Date Of certificate/Maintenance</th>
+											<th>Expiry Period</th>
+											<th>Expiry Date</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="certificate : ${expiredDocuments}">
 
+											<td><a th:href="@{'/admin/category/' + ${certificate.item.category.id}+'/item/' + ${certificate.item.id}}"><span
+													th:text="${certificate.item.serialNumber}"></span> </a>
+											</td>
+											<td th:text="${certificate.item.category.name}"></td>
+											<td th:text="${certificate.typeName}"></td>
+											<td th:text="${certificate.name}"></td>
+											<td th:text="${#dates.format(certificate.date, 'dd-MMM-yyyy')}"></td>
+											<td th:text="${certificate.periodName}"></td>
+											<td th:text="${#dates.format(certificate.expiryDate, 'dd-MMM-yyyy')}"></td>
+											<td th:id="${certificate.id}">
+											   <a th:href="@{'/admin/category/' + ${certificate.item.category.id}+'/item/' + ${certificate.item.id}+'/downloadcertificate/' + ${certificate.id}}" class="btn btn-success custom-width"><i class="fa fa-download" aria-hidden="true"></i></a>
+											   <button class="btn btn-danger custom-width delete-document"><i class="fa fa-trash-o fa-lg"></i></button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		
+		
+		
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<div class="generic-container">
+						<div class="panel panel-default">
+							<!-- Default panel contents -->
+							<div class="panel-heading">
+								<span class="lead">List of Documents Will Expire in 30 Days  </span>
+								<div class="heading-elements">
+									<ul class="icons-list">
+										<li><a data-action="collapse"></a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="tablecontainer">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Item</th>
+											<th>Category</th>
+											<th>Type</th>
+											<th>Name</th>
+											<th>Date Of certificate/Maintenance</th>
+											<th>Expiry Period</th>
+											<th>Expiry Date</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="certificate : ${documentsWillExpire}">
+											<td><a th:href="@{'/admin/category/' + ${certificate.item.category.id}+'/item/' + ${certificate.item.id}}"><span
+													th:text="${certificate.item.serialNumber}"></span> </a>
+											</td>
+											<td th:text="${certificate.item.category.name}"></td>
+											<td th:text="${certificate.typeName}"></td>
+											<td th:text="${certificate.name}"></td>
+											<td th:text="${#dates.format(certificate.date, 'dd-MMM-yyyy')}"></td>
+											<td th:text="${certificate.periodName}"></td>
+											<td th:text="${#dates.format(certificate.expiryDate, 'dd-MMM-yyyy')}"></td>
+											<td th:id="${certificate.id}">
+											   <a th:href="@{'/admin/category/' + ${certificate.item.category.id}+'/item/' + ${certificate.item.id}+'/downloadcertificate/' + ${certificate.id}}" class="btn btn-success custom-width"><i class="fa fa-download" aria-hidden="true"></i></a>
+											   <button class="btn btn-danger custom-width delete-document"><i class="fa fa-trash-o fa-lg"></i></button>
+											</td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+   </body>
 </html>

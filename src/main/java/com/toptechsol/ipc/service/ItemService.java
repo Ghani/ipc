@@ -8,7 +8,7 @@ public interface ItemService {
 	Item findById(Long id);
 	Item save(Item item);
 	List<Item> findAll();
-	List<Item> findByCategry(Integer categoryId);
-	Item findByIdAndCategoryId(Long id, Integer categoryId);
+	List<Item> findByCategry(String categoryId);
+	Item findByIdAndCategoryId(Long id, String categoryId);
 	void deleteItem(Long id);
 }

@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.toptechsol.ipc.model.Category;
 
 @Repository("categoryRepository")
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
-	 Category findById(Integer id);
+public interface CategoryRepository extends JpaRepository<Category, String> {
 }

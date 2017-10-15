@@ -1,0 +1,25 @@
+"category_id";"description";"name";"parent"
+"0";"";"Green TAG";root
+"1";"";"RED TAGG";root
+"2";"";"Well Control";0
+"3";"";"BOP";2
+"4";"";"Stuffing box";2
+"5";"";"Rises";0
+"6";"";"Flanges";0
+"7";"";"Gages";0
+"8";"";"BHA";0
+"9";"";"Lifting Gears Slings";0
+"10";"";"TREATING IRONS";0
+"11";"";"SHORT JOINT";10
+"12";"";"LONG JOINT";10
+"13";"";"Swivel";10
+"14";"";"Tee & Elbow And Y JOINT";10
+"15";"";"Plug Valves";10
+"16";"";"Check Valves";10
+"17";"";"CTU";0
+"18";"";"CTU-24";17
+"19";"";"Pump";0
+"20";"";"Pump-16";19
+"21";"";"N2 Uint";0
+"22";"";"N2 Uint -1";21
+"root";"";"root";0

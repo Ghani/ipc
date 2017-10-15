@@ -22,7 +22,11 @@ public class Category {
 
 	@Id
 	@Column(name = "category_id")
-	private Integer id;
+	private String id;
+	
+	
+	@Column(name = "parent")
+	private String parentId;
 
 	@NotNull
 	private String name;
@@ -45,11 +49,11 @@ public class Category {
 	@JoinColumn(name = "category_id")
 	private List<Item> items;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -91,6 +95,14 @@ public class Category {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 	
 	

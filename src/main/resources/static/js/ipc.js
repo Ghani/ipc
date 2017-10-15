@@ -1,22 +1,42 @@
-$(function() {
+/*$(function() {
   $('#jstree-categories').jstree({
     'core' : {
       'data' : {
-        "url" : "http://localhost:8080/admin/tree",
+        "url" : "/admin/tree",
         "dataType" : "json" // needed only if you do not supply JSON headers
       },
       'themes': {
           'name': 'proton',
-          'responsive': true
+          'responsive': false
       }
-    }
+    },"plugins" : [ "contextmenu", "dnd" ],
+
+	"contextmenu" : {
+		"items" : {
+			"create" : {
+				"label" : "Add",
+				"action" : function(obj) {
+					$('#jstree-categories').jstree().create_node('#', {
+						"id" : "ajson5",
+						"text" : "newly added"
+					}, "last", function() {
+						alert("done");
+					});
+				},
+			}
+		}
+	}
   });
 });
 
 $(function () {
     $('#jstree-categories').on('changed.jstree', function (e, data) {
-        console.log(data.node.id);
-        loadCategory(data.node.id);
+    	if( data.node != null) {
+            console.log(data.node.id);
+            loadCategory(data.node.id);
+    	}
+    	
+
     });
 });
 
@@ -46,7 +66,7 @@ function ChangeUrl(page, url) {
         window.location.href = "homePage";
         // alert("Browser does not support HTML5.");
     }
-}
+}*/
 
 $(document).ready(function () {
 	console.log( "document loaded" );
@@ -79,8 +99,8 @@ $(document).ready(function () {
                 type:"DELETE",
                 url:"/admin/deletedocument/" + id,
                 success:function (data) {
-                	console.log("data: " + data);
-                    $(".delete-item").closest("td#"+data).parent("tr").fadeOut("slow",function(){
+                    $(".delete-document").closest("td#"+data).parent("tr").fadeOut("slow",function(){
+                    	console.log("datax: " + data);
                         $(".delete-document").closest("td#"+data).parent("tr").remove();
                     });
                 }
